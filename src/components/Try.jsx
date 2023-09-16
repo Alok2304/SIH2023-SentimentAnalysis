@@ -5,9 +5,14 @@ import data from "./data";
 import { useState } from "react";
 import head from "next/head"
 import Link from "next/link"; 
+// import Router from "next/router"; 
+import { useRouter } from 'next/navigation'
+import Router from "next/navigation"; 
 
 
 export default function Index(){ 
+
+    const router = useRouter()
 
     const sty = {
         backgroundImage: "url('https://source.unsplash.com/random/240x320')",
@@ -29,6 +34,16 @@ export default function Index(){
     const handleChange = (e) => { 
         console.log(e); 
         setQuery(e.target.value)
+    }
+
+    function SendProps(){
+        Router.push(
+            "/specific", 
+            {
+                name: "Hello", 
+                id: 5, 
+            }
+        )
     }
 
 
@@ -99,7 +114,15 @@ export default function Index(){
                                 </div>
                             </div>
                             <h2 className="z-10 p-5">
-                                <Link rel="noopener noreferrer" href="/specific" state={{data: det}} className="font-medium text-3xl hover:underline text-gray-900 hover:text-gray-500">Check out </Link>
+                                <Link rel="noopener noreferrer" href={{
+                                        pathname: "/specific", 
+                                        query: {
+                                            id: det.id, 
+                                            name: det.name, 
+                                        }, 
+                                    }}
+                                    // SendProps()
+                                className="font-medium text-3xl hover:underline text-gray-900 hover:text-gray-500">Check out</Link>
                             </h2>
                         </div>
                     ))}
